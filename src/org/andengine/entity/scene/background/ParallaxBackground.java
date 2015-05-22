@@ -1,7 +1,6 @@
 package org.andengine.entity.scene.background;
 
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.camera.ZoomCamera;
 import org.andengine.entity.IEntity;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.debug.Debug;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
  * (c) 2011 Zynga Inc.
  *
  * @author Nicolas Gramlich
- * @since 15:36:26 - 19.07.2010
+ * @author Yaroslav Havrylovych
  */
 public class ParallaxBackground extends Background {
     // ===========================================================
@@ -127,10 +126,9 @@ public class ParallaxBackground extends Background {
         public void onDraw(final GLState pGLState, final Camera pCamera, final float pParallaxValue) {
             pGLState.pushModelViewGLMatrix();
             {
-                //TODO create something like getRealWidth (in Camera instead of ZoomCamera)?
-                final float cameraWidth = (pCamera instanceof ZoomCamera)
-                        ? ((ZoomCamera) pCamera).getUnzoomedWidth() : pCamera.getWidth();
                 final float entityWidthScaled = this.mEntity.getWidth() * this.mEntity.getScaleX();
+                //image which center x biggest than centerMaximumX are invisible
+                final float centerMaximumX = pCamera.getCameraSceneWidth() + entityWidthScaled / 2;
                 float baseOffset = (pParallaxValue * this.mParallaxFactor) % entityWidthScaled;
 
                 while (baseOffset > 0) {
@@ -138,13 +136,13 @@ public class ParallaxBackground extends Background {
                 }
                 pGLState.translateModelViewGLMatrixf(baseOffset, 0, 0);
 
-                float currentMaxX = baseOffset;
+                float currentCenterMaxX = baseOffset;
 
                 do {
                     this.mEntity.onDraw(pGLState, pCamera);
                     pGLState.translateModelViewGLMatrixf(entityWidthScaled, 0, 0);
-                    currentMaxX += entityWidthScaled;
-                } while (currentMaxX < cameraWidth);
+                    currentCenterMaxX += entityWidthScaled;
+                } while (currentCenterMaxX < centerMaximumX);
             }
             pGLState.popModelViewGLMatrix();
         }

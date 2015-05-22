@@ -98,14 +98,6 @@ public class ZoomCamera extends BoundCamera {
 		return super.getWidth() / this.mZoomFactor;
 	}
 
-	public float getUnzoomedWidth() {
-		return super.getWidth();
-	}
-
-	public float getUnzoomedHeight() {
-		return super.getHeight();
-	}
-
 	@Override
 	public float getHeight() {
 		return super.getHeight() / this.mZoomFactor;
