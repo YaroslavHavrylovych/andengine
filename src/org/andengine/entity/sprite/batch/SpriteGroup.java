@@ -167,7 +167,7 @@ public class SpriteGroup extends DynamicSpriteBatch {
 	// Methods
 	// ===========================================================
 
-	private void assertCapacity() {
+	protected void assertCapacity() {
 		if (this.getChildCount() >= this.mCapacity) {
 			throw new IllegalStateException("This " + SpriteGroup.class.getSimpleName() + " has already reached its capacity (" + this.mCapacity + ") !");
 		}
