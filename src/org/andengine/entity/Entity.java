@@ -1651,7 +1651,7 @@ public class Entity implements IEntity {
 		if ((this.mChildren != null) && !this.mChildrenIgnoreUpdate) {
 			final SmartList<IEntity> children = this.mChildren;
 			final int entityCount = children.size();
-			for (int i = 0; i < entityCount; i++) {
+			for (int i = entityCount - 1; i >= 0; i--) {
 				final IEntity child = children.get(i);
 				child.onUpdate(pSecondsElapsed);
 			}
