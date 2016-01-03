@@ -32,7 +32,7 @@ public class ButtonSprite extends TiledSprite {
 	private OnClickListener mOnClickListener;
 
 	private boolean mEnabled = true;
-	private State mState;
+	protected State mState;
 
 	// ===========================================================
 	// Constructors
