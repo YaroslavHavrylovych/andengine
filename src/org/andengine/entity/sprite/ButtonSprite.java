@@ -153,7 +153,7 @@ public class ButtonSprite extends TiledSprite {
 	// Methods
 	// ===========================================================
 
-	private void changeState(final State pState) {
+	protected void changeState(final State pState) {
 		if (pState == this.mState) {
 			return;
 		}
