@@ -1,17 +1,18 @@
 apply plugin: 'com.android.library'
 
 buildscript {
-    ext.android_support_lib = 'v7:23.0.1'
+    ext.android_support_lib = 'v7:21.0.2'
 }
 
 dependencies {
     compile "com.android.support:appcompat-$android_support_lib"
 }
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
-    useLibrary 'org.apache.http.legacy'
+// use with build tools >= 23
+//    useLibrary 'org.apache.http.legacy'
 
     sourceSets {
         main {
