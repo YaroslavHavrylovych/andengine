@@ -357,8 +357,42 @@ public class SpriteBatch extends Shape {
 		this.draw(pSprite.getTextureRegion(), pSprite, pSprite.getColor().getABGRPackedFloat());
 	}
 
+	/** used in {@link FlippableSpriteGroup} to draw children */
+	public void drawFlippableWithoutChecks(final Sprite pSprite) {
+		if (pSprite.isVisible()) {
+
+			float width = pSprite.getWidth();
+			float height = pSprite.getHeight();
+
+			if(pSprite.isFlippedHorizontal()) {
+				width = -width;
+			}
+			if(pSprite.isFlippedVertical()) {
+				height = -height;
+			}
+
+			ITextureRegion textureRegion = pSprite.getTextureRegion();
+			float color = pSprite.getColor().getABGRPackedFloat();
+			if (pSprite.isRotatedOrScaledOrSkewed()) {
+				this.addWithPackedColor(textureRegion, width, height,
+						pSprite.getLocalToParentTransformation(), color);
+			} else {
+				this.addWithPackedColor(textureRegion, pSprite.getX() - width / 2, pSprite.getY() - height / 2,
+						width, height, color);
+			}
+
+			this.mIndex++;
+		}
+	}
+
+	/**
+     * Used in {@link SpriteGroup} to draw children.
+     * Separated with {@link SpriteBatch#drawFlippableWithoutChecks(Sprite)} to prevent
+     * not needed checks (hopefully will increase performance)
+     */
 	public void drawWithoutChecks(final Sprite pSprite) {
-		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite, pSprite.getColor().getABGRPackedFloat());
+		this.drawWithoutChecks(pSprite.getTextureRegion(), pSprite,
+				pSprite.getColor().getABGRPackedFloat());
 	}
 
 	/**
@@ -554,20 +588,6 @@ public class SpriteBatch extends Shape {
 		this.addWithPackedColor(pTextureRegion, pWidth, pHeight, SpriteBatch.TRANSFORATION_TMP, pColorABGRPackedInt);
 	}
 
-	/**
-	 * @param pTextureRegion
-	 * @param pX
-	 * @param pY
-	 * @param pWidth
-	 * @param pHeight
-	 * @param pRotation around the center (pWidth * 0.5f, pHeight * 0.5f)
-	 * @param pScaleX around the center (pWidth * 0.5f, pHeight * 0.5f)
-	 * @param pScaleY around the center (pWidth * 0.5f, pHeight * 0.5f)
-	 * @param pRed
-	 * @param pGreen
-	 * @param pBlue
-	 * @param pAlpha
-	 */
 	protected void add(final ITextureRegion pTextureRegion, final float pX, final float pY, final float pWidth, final float pHeight, final float pScaleX, final float pScaleY, final float pRed, final float pGreen, final float pBlue, final float pAlpha) {
 		final float widthHalf = pWidth * 0.5f;
 		final float heightHalf = pHeight * 0.5f;
@@ -582,17 +602,6 @@ public class SpriteBatch extends Shape {
 		this.add(pTextureRegion, pWidth, pHeight, SpriteBatch.TRANSFORATION_TMP, pRed, pGreen, pBlue, pAlpha);
 	}
 
-	/**
-	 * @param pTextureRegion
-	 * @param pX
-	 * @param pY
-	 * @param pWidth
-	 * @param pHeight
-	 * @param pRotation around the center (pWidth * 0.5f, pHeight * 0.5f)
-	 * @param pScaleX around the center (pWidth * 0.5f, pHeight * 0.5f)
-	 * @param pScaleY around the center (pWidth * 0.5f, pHeight * 0.5f)
-	 * @param pColorABGRPackedInt
-	 */
 	protected void addWithPackedColor(final ITextureRegion pTextureRegion, final float pX, final float pY, final float pWidth, final float pHeight, final float pScaleX, final float pScaleY, final float pColorABGRPackedInt) {
 		final float widthHalf = pWidth * 0.5f;
 		final float heightHalf = pHeight * 0.5f;
