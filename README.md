@@ -27,3 +27,4 @@ The original
 * `SpriteBatch` entity positioning
 * `ParallaxBackground` changes: in ParallaxEntity#onDraw(GLState, Camera,float) to work normally with ZoomCamera
 * `reset(float pDuration, float pFromX, float pFromY, float pToX, float pToY)` added to MoveModifier
+* 64-bit architecture support
